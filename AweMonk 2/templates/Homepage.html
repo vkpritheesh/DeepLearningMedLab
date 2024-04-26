@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+   <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+   <title>MedLab</title>
+   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="static/css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" type="text/css" href="static/css/select2.min.css">
+   <link rel="stylesheet" type="text/css" href="static/css/bootstrap-datetimepicker.min.css">
+   <link rel="stylesheet" type="text/css" href="static/css/style2.css">
+   <style>
+                 
+      /*the container must be positioned relative:*/
+      .autocomplete {
+        position: relative;
+        display: inline-block;
+      }
+      
+      
+      .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+      
+      .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+      }
+      
+      /*when hovering an item:*/
+      .autocomplete-items div:hover {
+        background-color: #e9e9e9; 
+      }
+      
+      /*when navigating through the items using the arrow keys:*/
+      .autocomplete-active {
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+      }
+      </style>
+
+   <script>
+
+      function set_patient_cookie(){
+         document.cookie = "patientid="+$("#patientid").val();
+      }
+
+      function fill_params(){
+
+         let patientid = $("#patientid").val();
+
+         $.ajax({
+         dataType: 'json',
+         url: "/fetchPatientParams/"+patientid,
+         type: 'GET',
+         success: function (data) {
+             console.log(data["Age"]);
+             $("input[name=Diabetes]").val(data["Diabetes"])
+             $("input[name=COPD]").val(data["COPD"])
+             $("input[name=CKD]").val(data["CKD"])
+             $("input[name=PVD]").val(data["PVD"])
+             $("input[name=CAD]").val(data["CAD"])
+             $("input[name=HyperTension]").val(data["HyperTension"])
+             $("input[name=Gender]").val(data["gender_id"])
+             $("input[name=Age]").val(data["Age"])
+             $("input[name=Treated]").val(data["Treated"])
+
+
+             $("input[name=Race]").val(data["race"])
+             $("input[name=Hemoglobin_A1C]").val(data["Hemoglobin_A1C"])
+             $("input[name=Random_Glucose]").val(data["Random_Glucose"])
+             $("input[name=Fasting_Glucose]").val(data["Fasting_Glucose"])
+             $("input[name=BMI]").val(data["BMI"])
+             $("input[name=Systolic_BP]").val(data["Systolic_BP"])
+             $("input[name=Diastolic_BP]").val(data["Diastolic_BP"])
+             $("input[name=HDL_C]").val(data["HDL_C"])
+             $("input[name=LDL_C]").val(data["LDL_C"])
+
+
+
+             $("input[name=Total_Cholesterol]").val(data["Total_Cholesterol"])
+             $("input[name=Triglycerides]").val(data["Triglycerides"])
+             $("input[name=COPDAssesstmet_Test]").val(data["COPDAssesstmet_Test"])
+             $("input[name=nMRC]").val(data["nMRC"])
+             $("input[name=FEV1_FVC_Ratio]").val(data["FEV1\/FVC_Ratio"])
+             console.log(data["FEV1\/FVC_Ratio"])
+             $("input[name=FEV1]").val(data["FEV1"])
+             $("input[name=serum_creatinine]").val(data["serum_creatinine"])
+             $("input[name=gfr]").val(data["gfr"])
+             $("input[name=blood_urea_nitrogen]").val(data["blood_urea_nitrogen"])
+             $("input[name=Albumin_to_creatinine_ratio]").val(data["Albumin_to_creatinine_ratio"])
+
+             
+            //  window.open('/runner');
+         }
+     });
+
+      }
+   </script>
+</head>
+
+<body>
+   <div class="main-wrapper">
+      <div class="header">
+         <div class="header-left">
+            <a href="home" class="logo">
+               <img src="static/img/logo.png" width="35" height="35" alt=""> <span>MedLab</span>
+            </a>
+         </div>
+         <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+         <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+         <ul class="nav user-menu float-right">
+            <li class="nav-item dropdown d-none d-sm-block">
+               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span
+                     class="badge badge-pill bg-danger float-right">3</span></a>
+               <div class="dropdown-menu notifications">
+                  <div class="topnav-dropdown-header">
+                     <span>Notifications</span>
+                  </div>
+                  <div class="drop-scroll">
+                     <ul class="notification-list">
+                        <li class="notification-message">
+                           <a href="activities.html">
+                              <div class="media">
+                                 <span class="avatar">
+                                    <img alt="John Doe" src="static/img/user.jpg" class="img-fluid">
+                                 </span>
+                                 <div class="media-body">
+                                    <p class="noti-details"><span class="noti-title">John Doe</span> added new task
+                                       <span class="noti-title">Patient appointment booking</span></p>
+                                    <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li class="notification-message">
+                           <a href="activities.html">
+                              <div class="media">
+                                 <span class="avatar">V</span>
+                                 <div class="media-body">
+                                    <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the
+                                       task name <span class="noti-title">Appointment booking with payment
+                                          gateway</span></p>
+                                    <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li class="notification-message">
+                           <a href="activities.html">
+                              <div class="media">
+                                 <span class="avatar">L</span>
+                                 <div class="media-body">
+                                    <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span
+                                          class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire
+                                          Mapes</span> to project <span class="noti-title">Doctor available
+                                          module</span></p>
+                                    <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li class="notification-message">
+                           <a href="activities.html">
+                              <div class="media">
+                                 <span class="avatar">G</span>
+                                 <div class="media-body">
+                                    <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed
+                                       task <span class="noti-title">Patient and Doctor video conferencing</span></p>
+                                    <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li class="notification-message">
+                           <a href="activities.html">
+                              <div class="media">
+                                 <span class="avatar">V</span>
+                                 <div class="media-body">
+                                    <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new
+                                       task <span class="noti-title">Private chat module</span></p>
+                                    <p class="noti-time"><span class="notification-time">2 days ago</span></p>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="topnav-dropdown-footer">
+                     <a href="activities.html">View all Notifications</a>
+                  </div>
+               </div>
+            </li>
+            <li class="nav-item dropdown d-none d-sm-block">
+               <a href="javascript:void(0);" id="open_msg_box" class="hasnotifications nav-link"><i
+                     class="fa fa-comment-o"></i> <span class="badge badge-pill bg-danger float-right">8</span></a>
+            </li>
+            <li class="nav-item dropdown has-arrow">
+               <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                  <span class="user-img"><img class="rounded-circle" src="static/img/user.jpg" width="40" alt="Admin">
+                     <span class="status online"></span></span>
+                  <span>Admin</span>
+               </a>
+               <div class="dropdown-menu">
+                  <a class="dropdown-item" href="profile.html">My Profile</a>
+                  <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+                  <a class="dropdown-item" href="settings.html">Settings</a>
+                  <a class="dropdown-item" href="/">Logout</a>
+               </div>
+            </li>
+         </ul>
+         <div class="dropdown mobile-user-menu float-right">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                  class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+               <a class="dropdown-item" href="profile.html">My Profile</a>
+               <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+               <a class="dropdown-item" href="settings.html">Settings</a>
+               <a class="dropdown-item" href="/">Logout</a>
+            </div>
+         </div>
+      </div>
+      <div class="sidebar" id="sidebar">
+         <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+               <ul>
+                  <li class="menu-title">Main</li>
+                  <!--<li>
+                            <a href="/home"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+						<li>
+                            <a href="#"><i class="fa fa-user-md"></i> <span>Doctors</span></a>
+                        </li>
+                      <li>
+                            <a href="#"><i class="fa fa-wheelchair"></i> <span>Patients History</span></a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="#"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
+                        </li>-->
+
+                  <li>
+                     <a href="/home"><i class="fa fa-wheelchair"></i> <span>Health Assessment</span></a>
+                  </li>
+
+                  <li>
+                     <a href="/Uploadnewrecords"><i class="fa fa-wheelchair"></i> <span>Patient New Records</span></a>
+                  </li>
+                   <li>
+                     <a href="/appointments"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
+                   </li>
+
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="page-wrapper">
+         <div class="content">
+            <div class="row">
+               <div class="col-sm-4 col-3">
+                  <h4 class="page-title">Health Assessment</h4>
+               </div>
+            </div>
+
+            <div class="row filter-row">
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group form-focus">
+                     <label class="focus-label">Keyin Patient ID</label>
+                     <input type="text" id="patientid" name="patientid" class="form-control floating" value="" onkeyup="fetch_from_ehr();">
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <button
+                  style="background-color: #1977CC;border-color: #1977cc;"
+                     class="btn btn-primary"
+                     onclick="fill_params()"
+                     >Fetch Vitals from EHR</button>
+               </div>
+            </div>
+
+            <div class="row filter-row">
+               <div class="col-sm-12 col-lg-12">
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class=""> Input your clinical details below.</h4>
+                        </div>
+                     </div>
+                     <div class="iq-card-body">
+                        <form autocomplete="off" class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
+                           <div class="form-row">
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">Diabetes</label>
+                                 <input type="text" class="form-control" name="Diabetes" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">COPD</label>
+                                 <input type="text" class="form-control" name="COPD" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">CKD</label>
+                                 <input type="text" class="form-control" name="CKD"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">PVD</label>
+                                 <input type="text" class="form-control" name="PVD"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">CAD</label>
+                                 <input type="text" class="form-control" name="CAD"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3" style="display: none;">
+                                 <label for="validationDefault01">HyperTension</label>
+                                 <input type="text" class="form-control" name="HyperTension"  placeholder="" required>
+                              </div>
+   
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Gender</label>
+                                 <input type="text" class="form-control" name="Gender" placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Age</label>
+                                 <input type="text" class="form-control" name="Age"  placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Ethinicity</label>
+                                 <input type="text" class="form-control" name="Race" placeholder="" required>
+                              </div>
+   
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Treated</label>
+                                 <input type="text" class="form-control" name="Treated" placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Hemoglobin_A1C</label>
+                                 <input type="text" class="form-control" name="Hemoglobin_A1C" placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Random_Glucose</label>
+                                 <input type="text" class="form-control" name="Random_Glucose" placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Fasting_Glucose</label>
+                                 <input type="text" class="form-control" name="Fasting_Glucose" placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">BMI</label>
+                                 <input type="text" class="form-control" name="BMI"  placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Systolic_BP</label>
+                                 <input type="text" class="form-control" name="Systolic_BP"  placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Diastolic_BP</label>
+                                 <input type="text" class="form-control" name="Diastolic_BP"  placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">HDL_C</label>
+                                 <input type="text" class="form-control" name="HDL_C"  placeholder="" required>
+                              </div>
+   
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">LDL_C</label>
+                                 <input type="text" class="form-control" name="LDL_C"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Total_Cholesterol</label>
+                                 <input type="text" class="form-control" name="Total_Cholesterol" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Triglycerides</label>
+                                 <input type="text" class="form-control" name="Triglycerides"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">COPDAssesstmet_Test</label>
+                                 <input type="text" class="form-control" name="COPDAssesstmet_Test" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">nMRC</label>
+                                 <input type="text" class="form-control" name="nMRC"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">FEV1/FVC_Ratio</label>
+                                 <input type="text" class="form-control" name="FEV1_FVC_Ratio" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">FEV1</label>
+                                 <input type="text" class="form-control" name="FEV1"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">serum_creatinine</label>
+                                 <input type="text" class="form-control" name="serum_creatinine" placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">gfr</label>
+                                 <input type="text" class="form-control" name="gfr"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">blood_urea_nitrogen</label>
+                                 <input type="text" class="form-control" name="blood_urea_nitrogen"  placeholder="" required>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                 <label for="validationDefault01">Albumin_to_creatinine_ratio</label>
+                                 <input type="text" class="form-control" name="Albumin_to_creatinine_ratio"  placeholder="" required>
+                              </div>
+   
+   
+   
+                     </div>
+   
+                     <div class="iq-card-body">
+                        <div class="form-group">
+                           <button 
+                           class="btn btn-primary" 
+                           type="submit" 
+                           style="float: right;                                     background-color: #1977CC;
+                           border-color: #1977cc;"
+                           onclick="set_patient_cookie();">Take an assessment</button>
+                        </div>
+                     </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+            <div class="notification-box">
+               <div class="msg-sidebar notifications msg-noti">
+                  <div class="topnav-dropdown-header">
+                     <span>Messages</span>
+                  </div>
+                  <div class="drop-scroll msg-list-scroll" id="msg_list">
+                     <ul class="list-box">
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">R</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Richard Miles </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item new-message">
+                                 <div class="list-left">
+                                    <span class="avatar">J</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">John Doe</span>
+                                    <span class="message-time">1 Aug</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">T</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Tarah Shropshire </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">M</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Mike Litorus</span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">C</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Catherine Manseau </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">D</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Domenic Houston </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">B</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Buster Wigton </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">R</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Rolland Webber </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">C</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author"> Claire Mapes </span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">M</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Melita Faucher</span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">J</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Jeffery Lalor</span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">L</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Loren Gatlin</span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="chat.html">
+                              <div class="list-item">
+                                 <div class="list-left">
+                                    <span class="avatar">T</span>
+                                 </div>
+                                 <div class="list-body">
+                                    <span class="message-author">Tarah Shropshire</span>
+                                    <span class="message-time">12:28 AM</span>
+                                    <div class="clearfix"></div>
+                                    <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                       adipiscing</span>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="topnav-dropdown-footer">
+                     <a href="chat.html">See all messages</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div id="delete_employee" class="modal fade delete-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-body text-center">
+                     <img src="static/img/sent.png" alt="" width="50" height="46">
+                     <h3>Are you sure want to delete this Employee?</h3>
+                     <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+
+      <script>
+         function fetch_from_ehr(){
+            if($("#patientid").val().length >=3){
+               // alert("hi");
+            }
+            
+         }
+
+         function autocomplete(inp, arr) {
+           /*the autocomplete function takes two arguments,
+           the text field element and an array of possible autocompleted values:*/
+           var currentFocus;
+           /*execute a function when someone writes in the text field:*/
+           inp.addEventListener("input", function(e) {
+               var a, b, i, val = this.value;
+               /*close any already open lists of autocompleted values*/
+               closeAllLists();
+               if (!val) { return false;}
+               currentFocus = -1;
+               /*create a DIV element that will contain the items (values):*/
+               a = document.createElement("DIV");
+               a.setAttribute("id", this.id + "autocomplete-list");
+               a.setAttribute("class", "autocomplete-items");
+               /*append the DIV element as a child of the autocomplete container:*/
+               this.parentNode.appendChild(a);
+               /*for each item in the array...*/
+               for (i = 0; i < arr.length; i++) {
+                 /*check if the item starts with the same letters as the text field value:*/
+                 if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                   /*create a DIV element for each matching element:*/
+                   b = document.createElement("DIV");
+                   /*make the matching letters bold:*/
+                   b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                   b.innerHTML += arr[i].substr(val.length);
+                   /*insert a input field that will hold the current array item's value:*/
+                   b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                   /*execute a function when someone clicks on the item value (DIV element):*/
+                   b.addEventListener("click", function(e) {
+                       /*insert the value for the autocomplete text field:*/
+                       inp.value = this.getElementsByTagName("input")[0].value;
+                       /*close the list of autocompleted values,
+                       (or any other open lists of autocompleted values:*/
+                       closeAllLists();
+                   });
+                   a.appendChild(b);
+                 }
+               }
+           });
+           /*execute a function presses a key on the keyboard:*/
+           inp.addEventListener("keydown", function(e) {
+               var x = document.getElementById(this.id + "autocomplete-list");
+               if (x) x = x.getElementsByTagName("div");
+               if (e.keyCode == 40) {
+                 /*If the arrow DOWN key is pressed,
+                 increase the currentFocus variable:*/
+                 currentFocus++;
+                 /*and and make the current item more visible:*/
+                 addActive(x);
+               } else if (e.keyCode == 38) { //up
+                 /*If the arrow UP key is pressed,
+                 decrease the currentFocus variable:*/
+                 currentFocus--;
+                 /*and and make the current item more visible:*/
+                 addActive(x);
+               } else if (e.keyCode == 13) {
+                 /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                 e.preventDefault();
+                 if (currentFocus > -1) {
+                   /*and simulate a click on the "active" item:*/
+                   if (x) x[currentFocus].click();
+                 }
+               }
+           });
+           function addActive(x) {
+             /*a function to classify an item as "active":*/
+             if (!x) return false;
+             /*start by removing the "active" class on all items:*/
+             removeActive(x);
+             if (currentFocus >= x.length) currentFocus = 0;
+             if (currentFocus < 0) currentFocus = (x.length - 1);
+             /*add class "autocomplete-active":*/
+             x[currentFocus].classList.add("autocomplete-active");
+           }
+           function removeActive(x) {
+             /*a function to remove the "active" class from all autocomplete items:*/
+             for (var i = 0; i < x.length; i++) {
+               x[i].classList.remove("autocomplete-active");
+             }
+           }
+           function closeAllLists(elmnt) {
+             /*close all autocomplete lists in the document,
+             except the one passed as an argument:*/
+             var x = document.getElementsByClassName("autocomplete-items");
+             for (var i = 0; i < x.length; i++) {
+               if (elmnt != x[i] && elmnt != inp) {
+                 x[i].parentNode.removeChild(x[i]);
+               }
+             }
+           }
+           /*execute a function when someone clicks in the document:*/
+           document.addEventListener("click", function (e) {
+               closeAllLists(e.target);
+           });
+         }
+         
+
+         var patientids = [
+            "131680579", "116377373", "118015667", "108808603", "115172585", "108412011", "124614661", "118662579", "131844999", "126242893", "109266973", "124506307", "108536689", "124702641", "130489781", "130516543", "115152717", "116467123", "131725207", "134451945", "110327867", "123755081", "126118857", "135178831", "108674777", "119183709", "126957925", "108650077", "117289879", "134357611", "110616551", "109087051", "108737133", "127409241", "121128935", "116353535", "125487647", "118456067", "133256237", "131027329", "109915445", "124702631", "126765199", "131212541", "110885595", "109496829", "117123957", "113565073", "123089591", "108649347", "122268549", "114958699", "127490121", "130622161", "127768855", "117912257", "132754901", "126641021", "134797547", "128853209", "125394821", "108049829", "131883909", "108782029", "108137643", "126792549", "127455961", "108888415", "112418575", "128131229", "116238257", "135039067", "127160427", "118416797", "121133857", "134059095", "119748187", "118510429", "111952437", "115255965", "113982679", "130823947", "108049515", "115293233", "115768737", "129418049", "130984453", "123290801", "119787655", "113508067", "122716611", "126101691", "130666049", "133482537", "129614921", "132447701", "108893531", "124637907", "129452141", "113973253", "135266607", "119710849", "120509183", "130158705", "116090907", "123418543", "118121161", "126011223", "121533321", "130671181", "114116297", "125973525", "117521967", "124421493", "131110301", "113407927", "114753619", "129758125", "131895379", "133300495", "118692073", "108156049", "112226035", "123243345", "111646489", "121272743", "119192441", "127557593", "113587395", "134825227", "122851011", "108318353", "123165239", "135361447", "118455923", "115594041", "131368720", "131218017", "117005165", "130913297", "108784029", "117764673", "119026563", "127686913", "115218783", "124532193", "133048907", "108621147", "129183147", "127700091", "131435483", "123266729", "108012483", "128871919", "126750903", "111155791", "132036191", "108533009", "115416845", "115016767", "118147625", "125251261", "113687091", "111093217", "108407047", "108344499", "111731457", "114966167", "132411229", "135138281", "111343983", "108235115", "120556269", "119096985", "129790405", "125455083", "119508335", "111615063", "120135923", "123068863", "125714217", "131292863", "136542539", "135336217", "130441971", "120701891", "121409435", "109854681", "118605025", "110913969", "130739789", "108282489", "112856277", "131500149", "119610943", "118746897", "129308403", "118750589", "118187911", "109952125", "118727679", "115697103", "128358559", "125469365", "127546589", "129308847", "125988491", "122452599", "116568145", "134967757", "127962379", "122881029", "126750513", "134490143", "108160717", "133702088", "125231365", "114713631", "129416447", "108487611", "127815655", "116665845", "127311961", "108594969", "116898383", "119028757", "122635875", "111661593", "122618909", "119371367", "117554649", "108762471", "108398221", "108451993", "128179435", "120361957", "121412873", "119225133", "116544767", "113354985", "108329311", "109054195", "118176813", "115141019", "115416837", "112130425", "120057375", "134726499", "124448133", "120622351", "120780469", "128375471", "108166559", "108668383", "124702871", "133240747", "126783833", "112519181", "108097171", "108239015", "108890141", "130797051", "113458423", "113853065", "133161563", "108522195", "122123625", "127410175", "128927915", "112328557", "116183269", "135805383", "108143225", "133247507", "117534977", "133623923", "110110305", "109527505", "109590961", "118522601", "136638737", "133773107", "120598329", "127194635", "112976739", "126682265", "107992295", "134080761", "118823707", "127330455", "134024559", "124469013", "109406765", "110502047", "113522707", "133246587", "119375337", "132531143", "110792517", "125447357", "108223273", "115282323", "108773715", "122292987", "118500439", "124962835", "123578517", "126325031", "124331231", "122461163", "121839393", "122941009", "125387977", "115704525", "108260099", "129014465", "109753123", "126602705", "116836971", "129278049", "127300091", "119143083", "111933871", "122743537", "132856909", "108166037", "129598125", "108120937", "119531187", "108289852", "117860755", "109955351", "110059693", "129642271", "115840633", "121595269", "135560261", "112097869", "121653603", "117601767", "114392201", "120398243", "118734237", "108507459", "133735055", "129108397", "119984727", "123685947", "130744459", "129824423", "119437427", "120140855", "118614371", "135469445", "108425513", "109977131", "129239607", "126643787", "120087899", "108651541", "133361317", "118039443", "122724751", "119389953", "117253491", "108682385", "122972999", "108712653", "133105099", "111426001", "112262175", "135474787", "128791007", "135519001", "115535733", "130719771", "121237489", "131566391", "116816983", "136514653", "121511903", "115821253", "129529791", "123590895", "131276775", "108257453", "123351479", "120859487", "114941297", "119383873", "113940955", "111379953", "130962263", "108948565", "130381307", "128613845", "108202377", "128530463", "120198223", "128230599", "132394975", "124267509", "132032605", "125195909", "129824083", "108254613", "119205101", "123953625", "108561707", "121403833", "129444365", "118670615", "108419447", "108538269", "129999063", "128792503", "110821759", "134887215", "122290517", "111788391", "116298659", "109407435", "123897381", "121309377", "119818035", "130470889", "114522933", "120324783", "124191225", "120358013", "133745737", "129216049", "113961475", "108711213", "124820183", "108894531", "124112263", "117004511", "108405341", "108426341", "124884413", "125161147", "125909495", "134937603", "131634629", "124480483", "108706357", "110764635", "127494981", "133553737", "108162157", "122920189", "118045713", "110400112", "124353875", "128293669", "117735975", "109924179", "116221805", "128871571", "111802901", "118502101", "112532781", "108003337", "129874061", "127768977", "117511775", "114176319", "115656785", "111506379", "108917479", "109452691", "112519173", "125182087", "114972727", "108945639", "135095821", "129193025", "122939651", "108962849", "108380753", "126563051", "122899997", "113048427", "108590679", "119189869", "118071943", "111579931", "108201725", "129984763", "122396027", "118834149", "108309201", "128691779", "119164655", "108519165", "133114635", "124182065", "130673377", "133676839", "124138130", "108259771", "128281451", "113918229", "124478007", "108996772", "116596591", "126250139", "108931617", "134471301", "108438793", "108932359", "128711971", "121349073", "120451965", "124316321", "131305353", "112431263", "114562923", "108313013", "127658549", "108205245", "135278261", "111684927", "109743253", "129389043", "108252405", "134493171", "132641169", "126378621", "112886815", "116226695", "119621907", "108545437", "114562133", "109407445", "127354225", "122084013", "108138287", "114448555", "109798951", "119029833", "130424615", "114687697", "119149729", "129681723", "126766267", "108128779", "122938661", "129437357", "131482967", "108728631", "109658457", "118299011", "108701263", "119191731", "120330465", "108677509", "108212857", "131256039", "125674349", "127929675", "111737445", "108562267", "116652181", "108262543", "124949235", "110286195", "111055261", "129137053", "108652553", "124237545", "121755161", "108755291", "120949901", "108135317", "108877551", "136518833", "125135229", "126576341", "131280199", "108986471", "119152663", "111316195", "126311617", "116643403", "111672163", "112394711", "107896533", "108009775", "119516737", "119668023", "108796929", "124867783", "134616187", "112518987", "133519491", "130753807", "120970895", "134797649", "109205157", "108220887", "133642537", "118338667", "108092763", "111929801", "114248919", "122369221", "108069953", "119384943", "125200221", "127948945", "133125823", "124372969", "114927527", "107921613", "122669025", "114993227", "113266645", "114184767", "114646023", "135713703", "122966907", "114890931", "135375095", "108216345", "120127707", "121319819", "128899267", "126049123", "115691543", "108112899", "110786689", "117033595", "128421693", "127201431", "118156797", "109982733", "108485083", "135949245", "128331983", "109471919", "109011459", "113598403", "114107332", "119745383", "120641429", "127470853", "118631925", "108660625", "130174455", "112139451", "110324927", "110649995", "123977287", "135099765", "126828385", "129696915", "123806733", "128379005", "132657871", "111357911", "135845857", "113431749", "108773023", "108826042", "108732801", "126098207", "132107627", "123538761", "115554603", "129950013", "117836375", "118333493", "108789505", "135534815", "132457999", "108653741", "135007717", "125214457", "126874095", "118513730", "133338287", "113541693", "131665753", "130845883", "136445451", "109693417", "111911137", "113652557", "124302443", "129119305", "120057325", "132548511", "126792847", "132443925", "117000481", "113964749", "116285481", "129369129", "122166285", "122187357", "130671497", "127936819", "108676899", "108438331", "131300623", "135285383", "123761599", "111536415", "108283899", "108204977", "127791489", "109953385", "135976565", "108385311", "118413997", "125783389", "135636719", "131218527", "131897053", "108082561", "136441659", "122259841", "118518133", "108920615", "116849861", "108786163", "109682547", "127217915", "131998745", "125622643", "116360991", "130783301", "122238175", "111660453", "129986261", "110868167", "108762781", "119029943", "121904993", "115418575", "122033309", "111651119", "132396351", "109618405", "130794546", "120260589", "132926651", "108249869", "132751813", "126230557", "108162739", "117031881", "129491685", "129140647", "108783865", "135160001", "112066837", "112442881", "108373501", "117810229", "129537287", "133075177", "111950737", "136709375", "129605719", "113753243", "134091143", "134187829", "122298997", "108786615", "107964981", "117207897", "116814951", "126589673", "128581367", "124684729", "130405125", "111059345", "121254589", "108238665", "111747405", "118923835", "131444693", "112336793", "126804509", "124072717", "113051435", "111186011", "108591083", "118527619", "128320635", "129729615", "118085413", "108100259", "109967639", "121541981", "111699185", "114871241", "123937327", "133220891", "112924733", "136260359", "108326151", "131414049", "116975519", "127987897", "114595949", "132716249", "114522213", "136402943", "115891102", "128051747", "108161419", "116133397", "133529253", "132873261", "108661827", "134896661", "131959395", "122642855", "108967187", "123910833", "122756447", "131335471", "133121131", "128026609", "108652565", "135359753", "110039919", "128602865", "108137623", "121511595", "118024409", "108519215", "115369991", "110214443", "126457301", "128403843", "136429827", "121767529", "135409441", "108895307", "119686513", "109277753", "109939025", "116059427", "136001159", "112136889", "118710297", "131739921", "129687481", "121457365", "111027873", "125988887", "126899125", "117195859", "110010055", "108635933", "116620407", "120559895", "115970629", "108775981", "109696195", "129836779", "119294369", "110600047", "111367043", "108637689", "128632583", "113607460", "130835431", "114336701", "109964133", "113092171", "126988177", "116557455", "109469675", "120764357", "108721363", "108324541", "108658817", "109913901", "125416201", "123630917", "130601127", "118161547", "126645131", "121057825", "123582299", "112931903", "109227787", "130156945", "125373245", "113790245", "120032925", "116897745", "113979597", "115160515", "108904543", "127171909", "111660071", "111557685", "129983437", "112984877", "112159603", "125021267", "122920871", "116661619", "108304907", "134742375", "119320909", "122552011", "120981461", "124857919", "131962563", "115489857", "127455811", "110548623", "108659913", "120401255", "135581063", "112799021", "113594847", "113553307", "125667413", "136095791", "117723117", "134790247", "129952255", "121414765", "108887461", "108558965", "119208615", "108887431", "109961263", "108223683", "109965247", "111376319", "119582713", "108956605", "108289019", "136008599", "108527797", "131887429", "130998015", "127060213", "136430907", "135245461", "128213613", "132933909", "108253519", "131760541", "127338687", "120960315", "108623997", "108304873", "108597943", "132553071", "123538635", "112930257", "115465183", "129381113", "130291787", "108643391", "111365161", "135617671", "124765675", "111864595", "117223787", "133632379", "130506887", "130721191", "126375693", "109443217", "117464165", "120331265", "108803583"
+         ];
+         
+         autocomplete(document.getElementById("patientid"), patientids);
+         </script>
+
+
+      <div class="sidebar-overlay" data-reff=""></div>
+      <script src="static/js/jquery-3.2.1.min.js"></script>
+      <script src="static/js/popper.min.js"></script>
+      <script src="static/js/bootstrap.min.js"></script>
+      <script src="static/js/jquery.dataTables.min.js"></script>
+      <script src="static/js/dataTables.bootstrap4.min.js"></script>
+      <script src="static/js/jquery.slimscroll.js"></script>
+      <script src="static/js/select2.min.js"></script>
+      <script src="static/js/moment.min.js"></script>
+      <script src="static/js/bootstrap-datetimepicker.min.js"></script>
+      <script src="static/js/app.js"></script>
+</body>
+
+
+</html>

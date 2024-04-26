@@ -1,0 +1,134 @@
+*{
+		margin: 0;
+		padding: 0;
+		font-style: italic;
+    background-color: #ffe9e9;
+	}
+	
+	
+
+
+.MyLogoText{
+		float:left;
+		padding:20px;
+
+	  }
+
+
+.container{
+     background-color: #CBC3E3;
+     color: #4e1681;
+                font-style: oblique;
+                font-weight: bold;
+    margin-left:155px;
+  
+   
+    
+}
+
+sup{
+    color:red;
+     background-color: #CBC3E3;
+}
+
+.error{
+    background-color: #CBC3E3;   
+     color: #4e1681;
+}
+
+.container1{
+     background-color: #CBC3E3;     
+     
+}
+
+.container2{
+    margin-left:230px;
+     background-color: #CBC3E3;  
+}
+
+.content{
+    background-color: #CBC3E3;     
+    color: #4e1681;
+    float:left;
+    padding:80px 10px ;
+     font-size:25px;
+}
+.plus{
+    color:red;
+}
+
+
+		 
+   .header{
+               
+                width: 150px;
+                height: 70px;
+        background-color: #CBC3E3;
+      
+                
+            }
+         
+            .border{
+                padding: 80px 50px;
+                width: 750px;
+                height: 285px;
+                border: 1px solid #4e1681;
+                border-radius: 10px;
+                background-color: #CBC3E3;
+                
+               
+            }
+
+.vl {
+   border-left: 6px solid #4e1681;
+            height: 300px;
+            position:absolute;
+            left: 45%;
+}
+
+
+ 
+            .btn {
+                padding: 10px 50px;
+                
+                font-size:15px;
+                font-style: oblique;
+                font-weight: bold;
+                border-radius: 10px;
+                 
+	            color: #4e1681;
+	            border: 2px solid #4e1681;
+                
+                
+               
+                 
+            }
+ 
+            .textbox{
+                padding: 10px 40px;
+                border-radius: 10px;
+                 text-align:center;
+	            color: #4e1681;
+	            border: 2px solid #4e1681;
+                 font-size:15px;
+               
+            }
+                 
+            ::placeholder {
+                color: grey;
+                opacity: 1;
+                font-style: oblique;
+                font-weight: bold;
+            }
+ 
+            
+ 
+            .bottom{
+                color: #4e1681;
+                font-style: oblique;
+                font-weight: bold;
+                 background-color: #CBC3E3;
+                
+                
+            }
+

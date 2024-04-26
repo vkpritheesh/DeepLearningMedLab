@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>new patient page</title>
+    <meta charset="UTF-8">
+     
+      <style>
+          *{
+		margin: 0;
+		padding: 0;
+		font-style: italic;
+    background-color: #ffe9e9;
+	}
+	
+	
+
+
+.MyLogoText{
+		float:left;
+		padding:20px;
+
+	  }
+          
+  
+ 
+      </style>
+      <a class="MyLogo"><img src="/static/images/NexLogo.png" width="100" height="70"/><span class="MyLogoText"></span></a>
+       </head>
+    
+    <body>
+        
+        <h3 style= "font-size: 30px" align="center">RESULT :</h3>
+        <br>
+        <br>
+   <div class="container">
+    <h3 align="center">DIABETES :: {{diapred}}</h3>
+       <br>
+       <br>
+    <p>Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood glucose</p>
+       </div>
+    <br>
+        
+    <div class="container">
+    <h3 align="center">COPD :: {{copdpred}} </h3>
+        <br>
+        <br>
+    <p>Chronic obstructive pulmonary disease (COPD) is a chronic inflammatory lung disease that causes obstructed airflow from the lungs. Symptoms include breathing difficulty, cough, mucus (sputum) production and wheezing.</p>
+         </div>
+    <br>
+    <div class="container">
+    <h3 align="center">HYPERTENSION :: {{hyperpred}} </h3>
+   <br>
+        <br>
+        <p>High blood pressure, also called hypertension, is blood pressure that is higher than normal. Your blood pressure changes throughout the day based on your activities. Having blood pressure measures consistently above normal may result in a diagnosis of high blood pressure (or hypertension).</p>
+        </div>
+    <br>
+        <div class="container">
+    <h3 align="center">CKD :: {{ckdpred}} </h3>
+    <br>
+            <br>
+            <p>CKD is a condition in which the kidneys are damaged and cannot filter blood as well as they should. Because of this, excess fluid and waste from blood remain in the body and may cause other health problems, such as heart disease and stroke.</p>
+            </div>
+    <br>
+            <div class="container">
+    <h3 align="center">CAD :: {{cadpred}} </h3>
+   <br>
+                <br>
+                <p>Coronary artery disease (CAD) is the most common type of heart disease in the United States. It is sometimes called coronary heart disease or ischemic heart disease. For some people, the first sign of CAD is a heart attack. You and your health care team may be able to help reduce your risk for CAD.</p>
+   </div>
+      
+     
+        </body>
+</html>

@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <title>login page</title>
+    <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="/static/css/newpatientstyle.css">
+      <a class="MyLogo"><img src="/static/images/NexLogo.png" width="100" height="70"/><span class="MyLogoText"></span></a>
+
+       </head>
+    <body>
+<div class="row" align="center">
+    
+    <div class="col-md-8">
+        <center><h1 style="color:#4e1681;">Disease Prediction</h1></center>
+     <br>
+        <br>
+            <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
+                <div class="content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="formgroup">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Diabetes" placeholder="Diabetes">
+                        </div>
+                       
+                    </div>
+                     <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="COPD" placeholder="COPD">
+                        </div>
+                    </div>
+                     <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="CKD"  placeholder="CKD">
+                        </div>
+                    </div>
+                     <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="PVD"  placeholder="PVD">
+                        </div>
+                    </div>
+                     <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="CAD"  placeholder="CAD">
+                        </div>
+                    </div>
+                     <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="HyperTension"  placeholder="HyperTension">
+                        </div>
+                    </div>
+                     <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Age"  placeholder="Age">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Hemoglobin_A1C" placeholder="Hemoglobin_A1C">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Random_Glucose" placeholder="Random_Glucose">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row" >
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Fasting_Glucose" placeholder="Fasting_Glucose">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="BMI"  placeholder="BMI">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Systolic_BP"  placeholder="Systolic_BP">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row" >
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Diastolic_BP"  placeholder="Diastolic_BP">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="HDL_C"  placeholder="HDL_C">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="LDL_C"  placeholder="LDL_C">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Total_Cholesterol" placeholder="Total_Cholesterol">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Triglycerides"  placeholder="Triglycerides">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="COPDAssesstmet_Test" placeholder="COPDAssesstmet_Test">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="nMRC"  placeholder="nMRC">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="FEV1/FVC_Ratio" placeholder="FEV1/FVC_Ratio">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="FEV1"  placeholder="FEV1">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="serum_creatinine" placeholder="serum_creatinine">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="gfr"  placeholder="gfr">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="blood_urea_nitrogen"  placeholder="blood_urea_nitrogen">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid #4e1681" class="form-control" type="text" name="Albumin_to_creatinine_ratio"  placeholder="Albumin_to_creatinine_ratio">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                    
+</div>
+                <br>
+                <input type="submit" class="btn" value="Predict">
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+ 
+
+    </body>
+</html>

@@ -1,0 +1,143 @@
+*{
+		margin: 0;
+		padding: 0;
+		font-style: italic;
+    background-color:white;
+    
+	}
+	
+.MyLogoText{
+		float:left;
+		padding:20px;
+
+	  }
+
+
+	.banner{
+		width: 100%;
+		height: 100%;
+		
+        background-size: cover;
+		background-position: center;
+
+		
+	}
+
+.topnav {
+  overflow: hidden;
+  
+}
+
+.topnav a {
+  float: right;
+  color: black;
+  text-align: center;
+  padding: 12px 90px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  
+}
+
+
+h1 
+{
+    text-align: center;
+    padding : 15px;
+    color: #009efb
+     
+}
+
+h3 
+{
+    
+    padding: 25px 85px 2px;
+    color: #009efb
+}
+
+table, th, td {
+        border-bottom: 1px solid #009efb;
+        border-collapse: collapse;
+    }
+    
+.center{
+    margin-left: auto;
+  margin-right: auto;
+    
+}
+    th, td {
+        
+        width: 473px;
+        height: 40px;
+        color: #009efb;
+        font-size: 15px;
+}
+td {
+  text-align: center;
+}
+    
+  
+ 
+
+
+.patientDetailsalign{
+    line-height: 2 ;
+}
+
+.patanalysis{
+    width: 260px;
+    text-align:center;
+    display:inline-block;
+}
+.result{
+    
+    width: 400px;
+    text-align:center;
+    display:inline-block;
+}
+
+
+.pagination {
+  display: inline-block;
+  padding: 50px 600px;
+}
+
+.pagination a {
+  color: black;
+  float: center;
+  padding: 8px 16px ;
+  text-decoration: none;
+}
+
+.container {
+    display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+}
+
+
+
+.btngp{
+   padding: 8px 10px ;
+}
+button
+{
+ width: 125px;
+		
+		text-align:center;
+		float: right;
+		border-radius: 25px;
+		font-weight: bold;
+		border: 2px solid #009efb;
+		background: transparent;
+		color: #009efb;
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+    
+    
+   
+}
